@@ -1,4 +1,12 @@
+app:
+  user-service:
+    goal-service:
+      max-goals-amount: 3
+
 spring:
+  mvc:
+    servlet:
+      path: /api/v1
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres
@@ -20,6 +28,9 @@ spring:
     redis:
       port: 6379
       host: localhost
+
+listeners:
+  userDeactivation: true
 
 server:
   port: 8080
