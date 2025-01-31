@@ -33,6 +33,7 @@ public class SkillService {
     private final SkillCandidateMapper skillCandidateMapper;
     private final UserSkillGuaranteeRepository userSkillGuaranteeRepository;
 
+
     public SkillDto createSkill(SkillDto skillDto) {
         log.info("Creating skill {}", skillDto.getTitle());
         skillValidator.validateTitle(skillDto);
@@ -42,14 +43,14 @@ public class SkillService {
         return skillMapper.toDto(skill);
     }
 
-    public List<SkillDto> getUserSkills(long userId) {
+    public List<SkillDto> getUserSkills(Long userId) {
         log.info("Getting skills for user {}", userId);
-        List<Skill> skills = skillRepository.findAllByUserId(userId);
+        List<Skill> skills = findAllByIdUserId(userId);
         log.info("From user {} found {} skills", userId, skills.size());
         return skillMapper.toDtoList(skills);
     }
 
-    public List<SkillCandidateDto> getOfferedSkill(long userId) {
+    public List<SkillCandidateDto> getOfferedSkill(Long userId) {
         log.info("Getting offered skills for user {}", userId);
 
         List<SkillDto> skills = skillMapper.toDtoList(skillRepository.findSkillsOfferedToUser(userId));
@@ -59,7 +60,7 @@ public class SkillService {
     }
 
     @Transactional
-    public SkillDto acquireSkillFromOffers(long skillId, long userId) {
+    public SkillDto acquireSkillFromOffers(Long skillId, Long userId) {
         log.info("Acquiring skill {} from offers for user {}", skillId, userId);
         Skill skill = skillValidator.skillAlreadyExists(skillId);
 
@@ -85,5 +86,18 @@ public class SkillService {
         }
         log.info("No more offers for skill {} from user {}", skillId, userId);
         return skillMapper.toDto(skill);
+    }
+
+    public List<Skill> findAllByIdUserId(Long userId){
+        return skillRepository.findAllByUserId(userId);
+    }
+
+    public List<Skill> findAllById(List<Long> skillIds){
+        return skillRepository.findAllById(skillIds);
+    }
+
+    public Long countExisting(List<Long> skillIds){
+        int count = skillRepository.countExisting(skillIds);
+        return (long) count;
     }
 }

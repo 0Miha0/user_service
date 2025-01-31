@@ -1,5 +1,6 @@
 package school.faang.user_service.repository;
 
+import feign.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import school.faang.user_service.entity.User;
@@ -25,4 +26,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Stream<User> findPremiumUsers();
 
     List<User> findByUsernameLike(String username);
+
+    @Query(nativeQuery = true, value = """
+            SELECT u.id FROM users u
+            WHERE u.id NOT IN (:userIds)
+            """)
+    List<Long> findNotExistingUserIds(@Param("userIds") List<Long> userIds);
 }
