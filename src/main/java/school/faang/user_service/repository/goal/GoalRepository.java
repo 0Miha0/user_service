@@ -47,4 +47,10 @@ public interface GoalRepository extends JpaRepository<Goal, Long> {
             WHERE ug.goal_id = :goalId
             """)
     List<User> findUsersByGoalId(long goalId);
+
+    @Query(nativeQuery = true, value = """
+            INSERT INTO goal_skill (goal_id, skill_id)
+            VALUES (:goalId, :skillId)
+            """)
+    void addSkillToGoalById(long goalId, long skillId);
 }
