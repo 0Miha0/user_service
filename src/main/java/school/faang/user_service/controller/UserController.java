@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,6 +42,24 @@ public class UserController {
     @PostMapping("/premium")
     public ResponseEntity<List<UserDto>> getPremiumUsers(@RequestBody UserFilterDto filters) {
         return ResponseEntity.ok(userService.getPremiumUsers(filters));
+    }
+
+    @Operation(summary = "Get user by ID")
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getUserById(userId));
+    }
+
+    @Operation(summary = "Get users by ids")
+    @GetMapping("/ids")
+    public ResponseEntity<List<UserDto>> getUsersByIds(@RequestBody List<Long> ids) {
+        return ResponseEntity.ok(userService.getUsersByIds(ids));
+    }
+
+    @Operation(summary = "Save user")
+    @PostMapping
+    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(userService.saveUser(userDto));
     }
 
 }

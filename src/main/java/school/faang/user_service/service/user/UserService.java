@@ -59,12 +59,19 @@ public class UserService {
         eventPublisher.publishEvent(new UserDeactivationEvent(this, userId));
     }
 
-    private List<UserDto> filter(Stream<User> usersStream, UserFilterDto filterDto) {
-        return userMapper.entityStreamToDtoList(userFilters.stream()
-                .filter(userFilter -> userFilter.isApplicable(filterDto))
-                .reduce(usersStream,
-                        (users, userFilter) -> userFilter.apply(users, filterDto),
-                        (a, b) -> b));
+    public UserDto getUserById(Long userId) {
+        log.info("The beginning get user by id");
+        return userMapper.toDto(findById(userId));
+    }
+
+    public List<UserDto> getUsersByIds(List<Long> userIds) {
+        log.info("The beginning get users by ids");
+        return userMapper.entityStreamToDtoList(findAllById(userIds).stream());
+    }
+
+    public UserDto saveUser(UserDto userDto) {
+        log.info("The beginning save user");
+        return userMapper.toDto(save(userMapper.toEntity(userDto)));
     }
 
     public void saveAll(List<User> user) {
@@ -76,8 +83,13 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User with ID " + id + " not found"));
     }
 
-    public void save(User user) {
-        userRepository.save(user);
+    public List<User> findAllById(List<Long> userIds) {
+        log.info("The beginning get users by ids");
+        return userRepository.findAllById(userIds);
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     public boolean existsById(Long userId) {
@@ -87,6 +99,14 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<Long> getNotExistingUserIds(List<Long> userIds) {
         return userIds.isEmpty() ? Collections.emptyList() : userRepository.findNotExistingUserIds(userIds);
+    }
+
+    private List<UserDto> filter(Stream<User> usersStream, UserFilterDto filterDto) {
+        return userMapper.entityStreamToDtoList(userFilters.stream()
+                .filter(userFilter -> userFilter.isApplicable(filterDto))
+                .reduce(usersStream,
+                        (users, userFilter) -> userFilter.apply(users, filterDto),
+                        (a, b) -> b));
     }
 
     private Stream<User> filterPremiumUsers(Stream<User> users) {

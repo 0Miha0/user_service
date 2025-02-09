@@ -1,0 +1,53 @@
+spring:
+  mvc:
+    servlet:
+      path: /api/v1
+  datasource:
+    url: jdbc:tc:postgresql:15:///test
+    driver-class-name: org.postgresql.Driver
+    username: test
+    password: test
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-test.yaml
+
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      channels:
+        calculations_channel:
+          name: calculations_channel
+
+server:
+  port: 8082
+
+logging:
+  level:
+    root: info
+
+calculations_messages_processing:
+  enabled: true
+
+services:
+  s3:
+    endpoint: http://localhost:9000
+    accessKey: user
+    secretKey: password
+    bucketName: projectbucket
+    isMocked: false
+  payment-service:
+    host: http://localhost
+    port: 9080
+  user-service:
+    host: http://localhost
+    port: 8080
