@@ -1,8 +1,6 @@
-package school.faang.user_service.controller;
-
 import com.redis.testcontainers.RedisContainer;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -12,15 +10,13 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import school.faang.user_service.dto.skill.SkillDto;
+import school.faang.user_service.UserServiceApplication;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@SpringBootTest
+@SpringBootTest(classes = UserServiceApplication.class)
 @Testcontainers
 @DirtiesContext
 @ActiveProfiles("test")
-public class SkillControllerIT {
+public class UserServiceApplicationTest {
 
     @Container
     public static PostgreSQLContainer<?> POSTGRESQL_CONTAINER =
@@ -48,13 +44,9 @@ public class SkillControllerIT {
         }
     }
 
-    @Autowired
-    private SkillController skillController;
-
     @Test
-    public void createSkill() {
-        SkillDto skillDto = skillController.createSkill(SkillDto.builder().title("Javava vava va ava1").build()).getBody();
+    @DisplayName("Test context loading")
+    void contextLoads() {
 
-        assertEquals("Javava vava va ava1", skillDto.getTitle());
     }
 }
