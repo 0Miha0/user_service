@@ -2,6 +2,7 @@ package school.faang.user_service.service.avatar;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -18,6 +19,7 @@ public class AvatarService {
     private final WebClient webClient;
     private final DiceBearProperties diceBearProperties;
 
+    @Qualifier("diceBearWebClient")
     public Optional<byte[]> getRandomDiceBearAvatar(Long userId) {
         log.info("Requesting random avatar for user ID: {} with style: {}, format: {}",
                 userId, diceBearProperties.getStyle(), diceBearProperties.getFormat());

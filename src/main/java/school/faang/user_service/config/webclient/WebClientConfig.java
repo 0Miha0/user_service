@@ -9,7 +9,7 @@ import school.faang.user_service.properties.DiceBearProperties;
 public class WebClientConfig {
 
     @Bean
-    public WebClient webClient(DiceBearProperties properties) {
+    public WebClient diceBearWebClient(DiceBearProperties properties) {
         return WebClient.builder()
                 .baseUrl(properties.getBaseUrl())
                 .build();
