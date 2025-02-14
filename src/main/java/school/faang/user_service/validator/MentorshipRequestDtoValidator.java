@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import school.faang.user_service.dto.mentorship.MentorshipRequestCreationDto;
 import school.faang.user_service.entity.MentorshipRequest;
 import school.faang.user_service.entity.RequestStatus;
-import school.faang.user_service.exception.DataValidationException;
+import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.repository.mentorship.MentorshipRequestRepository;
 import school.faang.user_service.service.user.UserService;
 
