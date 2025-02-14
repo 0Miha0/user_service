@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import school.faang.user_service.dto.skill.SkillDto;
 import school.faang.user_service.entity.Skill;
-import school.faang.user_service.exception.DataValidationException;
+import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.repository.SkillRepository;
 
 @Component

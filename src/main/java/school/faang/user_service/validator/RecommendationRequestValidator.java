@@ -8,7 +8,7 @@ import school.faang.user_service.dto.recommendationRequest.RecommendationRequest
 import school.faang.user_service.entity.RequestStatus;
 import school.faang.user_service.entity.Skill;
 import school.faang.user_service.entity.recommendation.RecommendationRequest;
-import school.faang.user_service.exception.DataValidationException;
+import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.repository.SkillRepository;
 import school.faang.user_service.repository.UserRepository;
 import school.faang.user_service.repository.recommendation.RecommendationRequestRepository;

@@ -46,3 +46,9 @@ project-service:
 payment-service:
   host: localhost
   port: 9080
+
+dice-bear:
+  base-url: https://api.dicebear.com
+  version: 9.x
+  style: bottts
+  format: png

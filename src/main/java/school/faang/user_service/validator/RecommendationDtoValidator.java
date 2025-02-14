@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import school.faang.user_service.dto.recommendation.RecommendationDto;
 import school.faang.user_service.dto.skill.SkillOfferDto;
-import school.faang.user_service.exception.DataValidationException;
+import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.repository.SkillRepository;
 import school.faang.user_service.repository.recommendation.RecommendationRepository;
 

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import school.faang.user_service.dto.goal.GoalDto;
 import school.faang.user_service.dto.goal.GoalFilterDto;
 import school.faang.user_service.entity.goal.Goal;
-import school.faang.user_service.exception.DataValidationException;
+import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.filter.goal.GoalFilter;
 import school.faang.user_service.mapper.goal.GoalMapper;
 import school.faang.user_service.publisher.UserDeactivationEvent;
