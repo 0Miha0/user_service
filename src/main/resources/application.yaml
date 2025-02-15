@@ -7,6 +7,8 @@ spring:
   mvc:
     servlet:
       path: /api/v1
+      multipart:
+        max-file-size: 5MB
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres
@@ -46,6 +48,12 @@ project-service:
 payment-service:
   host: localhost
   port: 9080
+
+minio:
+  endpoint: http://127.0.0.1:9000
+  accessKey: user
+  secretKey: password
+  bucketName: corpbucket
 
 dice-bear:
   base-url: https://api.dicebear.com
