@@ -54,8 +54,8 @@ public class SkillControllerIT {
 
     @Test
     public void createSkill() {
-        SkillDto skillDto = skillController.createSkill(SkillDto.builder().title("Javava vava va ava1").build()).getBody();
+        SkillDto skillDto = skillController.createSkill(SkillDto.builder().title("Javava vava va ava11").build()).getBody();
 
-        assertEquals("Javava vava va ava1", skillDto.getTitle());
+        assertEquals("Javava vava va ava11", skillDto.getTitle());
     }
 }

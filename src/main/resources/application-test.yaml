@@ -50,10 +50,10 @@ payment-service:
   port: 9080
 
 minio:
-  endpoint: ${minio.endpoint}
-  accessKey: ${minio.accessKey}
-  secretKey: ${minio.secretKey}
-  bucketName: ${minio.bucketName}
+  endpoint: http://127.0.0.1:9000
+  accessKey: user
+  secretKey: password
+  bucketName: corpbucket
 
 dice-bear:
   base-url: https://api.dicebear.com
