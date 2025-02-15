@@ -15,6 +15,7 @@ import org.testcontainers.utility.DockerImageName;
 import school.faang.user_service.dto.skill.SkillDto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Testcontainers
