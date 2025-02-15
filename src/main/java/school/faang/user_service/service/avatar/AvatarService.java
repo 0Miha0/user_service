@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import school.faang.user_service.dto.user.UserProfilePicDto;
 import school.faang.user_service.entity.UserProfilePic;
 import school.faang.user_service.exception.customexception.AvatarProcessingException;
-import school.faang.user_service.exception.customexception.DiceBearException;
 import school.faang.user_service.mapper.user.UserProfilePicMapper;
 import school.faang.user_service.repository.UserRepository;
 import school.faang.user_service.service.dicebear.DiceBearService;
