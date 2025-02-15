@@ -1,3 +1,5 @@
+package school.faang.user_service;
+
 import com.redis.testcontainers.RedisContainer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import school.faang.user_service.UserServiceApplication;
 
 @SpringBootTest(classes = UserServiceApplication.class)
 @Testcontainers
