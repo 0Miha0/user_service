@@ -1,11 +1,13 @@
 package school.faang.user_service.exception;
 
+import io.minio.errors.MinioException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import school.faang.user_service.exception.customexception.AvatarProcessingException;
 import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.exception.customexception.DiceBearException;
 
@@ -37,6 +39,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({DiceBearException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleDiceBearException(DiceBearException ex) {
+        return buildResponse(ex);
+    }
+
+    @ExceptionHandler({MinioException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleMinioException(MinioException ex) {
+        return buildResponse(ex);
+    }
+
+    @ExceptionHandler({AvatarProcessingException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleAvatarNotFoundException(AvatarProcessingException ex) {
         return buildResponse(ex);
     }
 

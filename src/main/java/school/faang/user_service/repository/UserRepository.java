@@ -2,10 +2,13 @@ package school.faang.user_service.repository;
 
 import feign.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import school.faang.user_service.entity.User;
+import school.faang.user_service.entity.UserProfilePic;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -32,4 +35,37 @@ public interface UserRepository extends JpaRepository<User, Long> {
             WHERE u.id NOT IN (:userIds)
             """)
     List<Long> findNotExistingUserIds(@Param("userIds") List<Long> userIds);
+
+    @Query("""
+    SELECT u.userProfilePic 
+    FROM User u 
+    WHERE u.id = :userId
+    """)
+    Optional<UserProfilePic> findUserProfilePicByUserId(
+            @Param("userId") Long userId
+    );
+
+    @Modifying
+    @Query("""
+    UPDATE User u 
+    SET u.userProfilePic.fileId = :fileId, 
+        u.userProfilePic.smallFileId = :smallFileId 
+    WHERE u.id = :userId
+    """)
+    void updateProfilePic(
+            @Param("userId") Long userId,
+            @Param("fileId") String fileId,
+            @Param("smallFileId") String smallFileId
+    );
+
+    @Modifying
+    @Query("""
+    UPDATE User u 
+    SET u.userProfilePic.fileId = NULL, 
+        u.userProfilePic.smallFileId = NULL 
+    WHERE u.id = :userId
+    """)
+    void deleteProfilePic(
+            @Param("userId") Long userId
+    );
 }
