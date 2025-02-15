@@ -1,13 +1,19 @@
+app:
+  user-service:
+    goal-service:
+      max-goals-amount: 3
+
 spring:
   mvc:
     servlet:
       path: /api/v1
+      multipart:
+        max-file-size: 5MB
   datasource:
-    url: jdbc:tc:postgresql:15:///test
     driver-class-name: org.postgresql.Driver
-    username: test
-    password: test
-
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: user
+    password: password
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -18,36 +24,39 @@ spring:
         format_sql: true
 
   liquibase:
-    change-log: classpath:db/changelog/db.changelog-test.yaml
+    change-log: classpath:db/changelog/db.changelog-master.yaml
 
   data:
     redis:
       port: 6379
       host: localhost
-      channels:
-        calculations_channel:
-          name: calculations_channel
+
+listeners:
+  userDeactivation: true
 
 server:
-  port: 8082
+  port: 8080
 
 logging:
   level:
     root: info
 
-calculations_messages_processing:
-  enabled: true
+project-service:
+  host: localhost
+  port: 8082
 
-services:
-  s3:
-    endpoint: http://localhost:9000
-    accessKey: user
-    secretKey: password
-    bucketName: projectbucket
-    isMocked: false
-  payment-service:
-    host: http://localhost
-    port: 9080
-  user-service:
-    host: http://localhost
-    port: 8080
+payment-service:
+  host: localhost
+  port: 9080
+
+minio:
+  endpoint: ${minio.endpoint}
+  accessKey: ${minio.accessKey}
+  secretKey: ${minio.secretKey}
+  bucketName: ${minio.bucketName}
+
+dice-bear:
+  base-url: https://api.dicebear.com
+  version: 9.x
+  style: bottts
+  format: png
