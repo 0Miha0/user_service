@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import school.faang.user_service.exception.customexception.AvatarProcessingException;
+import school.faang.user_service.exception.customexception.CSVFileException;
 import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.exception.customexception.DiceBearException;
 
@@ -51,6 +52,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({AvatarProcessingException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleAvatarNotFoundException(AvatarProcessingException ex) {
+        return buildResponse(ex);
+    }
+
+    @ExceptionHandler({CSVFileException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleCSVFileException(CSVFileException ex) {
         return buildResponse(ex);
     }
 
