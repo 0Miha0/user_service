@@ -1,7 +1,10 @@
 package school.faang.user_service.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import school.faang.user_service.dto.user.UserDto;
 import school.faang.user_service.dto.user.UserFilterDto;
 import school.faang.user_service.service.user.UserService;
@@ -62,4 +67,14 @@ public class UserController {
         return ResponseEntity.ok(userService.saveUser(userDto));
     }
 
+    @Operation(summary = "Upload users")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Users uploaded successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid file format"),
+            @ApiResponse(responseCode = "500", description = "Error occurred while uploading users")
+    })
+    @PostMapping("/upload")
+    public ResponseEntity<List<UserDto>> uploadUsers(@RequestParam("csvFile") @NotNull MultipartFile csvFile) {
+        return ResponseEntity.ok(userService.uploadUsers(csvFile));
+    }
 }
