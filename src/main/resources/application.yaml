@@ -2,6 +2,8 @@ app:
   user-service:
     goal-service:
       max-goals-amount: 3
+    premium-service:
+      butch: 100
 
 spring:
   mvc:
@@ -60,3 +62,15 @@ dice-bear:
   version: 9.x
   style: bottts
   format: png
+
+async:
+  remove-premium:
+    executor-name: premiumUserDeletionTaskExecutor
+    corePoolSize: 5
+    maxPoolSize: 30
+    queueCapacity: 100
+
+scheduled:
+  remove-premium:
+    cron: "0 0 0 * * SUN"
+
