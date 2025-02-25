@@ -42,9 +42,9 @@ public class UserService {
     private final List<UserFilter> userFilters;
     private final UserMapper userMapper;
     private final CountryService countryService;
+    private final UserValidator userValidator;
 
     private static final String FILE_TYPE = "text/csv";
-    private final UserValidator userValidator;
 
     @Transactional(readOnly = true)
     public List<UserDto> getNotPremiumUsers(UserFilterDto filterDto) {
