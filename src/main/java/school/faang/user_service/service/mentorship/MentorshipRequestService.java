@@ -11,12 +11,15 @@ import school.faang.user_service.dto.mentorship.RequestFilterDto;
 import school.faang.user_service.entity.MentorshipRequest;
 import school.faang.user_service.entity.RequestStatus;
 import school.faang.user_service.entity.User;
+import school.faang.user_service.event_drive.redis.event.MentorshipRequestedEvent;
+import school.faang.user_service.event_drive.redis.publisher.MentorshipRequestedEventPublisher;
 import school.faang.user_service.filter.mentorship.mentorshipRequest.RequestFilter;
 import school.faang.user_service.mapper.mentorship.MentorshipRequestMapper;
 import school.faang.user_service.repository.mentorship.MentorshipRequestRepository;
 import school.faang.user_service.service.user.UserService;
 import school.faang.user_service.validator.MentorshipRequestDtoValidator;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -31,40 +34,40 @@ public class MentorshipRequestService {
     private final MentorshipRequestDtoValidator requestValidator;
     private final MentorshipRequestMapper requestMapper;
     private final List<RequestFilter> requestFilters;
+    private final MentorshipRequestedEventPublisher mentorshipRequestedEventPublisher;
 
-    @Transactional
     public MentorshipRequestDto requestMentorship(MentorshipRequestCreationDto creationRequestDto) {
         Long requesterId = creationRequestDto.getRequesterId();
         Long receiverId = creationRequestDto.getReceiverId();
-        log.info(
-                "Received a mentorship request! Requester ID - {}, Receiver ID - {}.",
-                requesterId,
-                receiverId
-        );
+        log.info("Received a mentorship request! Requester ID - {}, Receiver ID - {}.", requesterId, receiverId);
 
         requestValidator.validateCreationRequest(creationRequestDto);
 
         MentorshipRequest request = requestMapper.toMentorshipRequest(creationRequestDto);
         request.setStatus(RequestStatus.PENDING);
         MentorshipRequest savedRequest = requestRepository.save(request);
-        log.info(
-                "The mentorship request has been saved in data base! Requester ID - {}, receiver ID - {}, date of creation - {}",
-                requesterId, receiverId, savedRequest.getCreatedAt()
-        );
+        log.info("The mentorship request has been saved in data base! Requester ID - {}, receiver ID - {}, date of creation - {}", requesterId, receiverId, savedRequest.getCreatedAt());
 
+        mentorshipRequestedEventPublisher.publish(
+                MentorshipRequestedEvent.builder()
+                        .receiverId(creationRequestDto.getReceiverId())
+                        .actorId(creationRequestDto.getRequesterId())
+                        .receivedAt(LocalDateTime.now())
+                        .build()
+        );
+        log.info("Mentorship request has been successfully sent to the receiver! Requester ID - {}, receiver ID - {}.", requesterId, receiverId);
         return requestMapper.toMentorshipRequestDto(savedRequest);
     }
 
-    @Transactional
     public List<MentorshipRequestDto> getRequests(RequestFilterDto filterDto) {
         log.info("A request has been received to retrieve mentorship requests with the provided filter.");
         Stream<MentorshipRequest> requestsToFilter = requestRepository.findAll().stream();
 
         requestsToFilter = requestFilters.stream()
-                        .filter(requestFilter -> requestFilter.isApplicable(filterDto))
-                        .reduce(requestsToFilter,
-                                (currentStream, eventFilter) -> eventFilter.apply(currentStream, filterDto),
-                                (s1, s2) -> s2);
+                .filter(requestFilter -> requestFilter.isApplicable(filterDto))
+                .reduce(requestsToFilter,
+                        (currentStream, eventFilter) -> eventFilter.apply(currentStream, filterDto),
+                        (s1, s2) -> s2);
 
         List<MentorshipRequest> filteredRequests = requestsToFilter.toList();
 

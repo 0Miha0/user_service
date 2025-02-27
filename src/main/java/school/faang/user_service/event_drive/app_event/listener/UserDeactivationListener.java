@@ -1,4 +1,4 @@
-package school.faang.user_service.listener;
+package school.faang.user_service.event_drive.app_event.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import school.faang.user_service.entity.User;
-import school.faang.user_service.publisher.UserDeactivationEvent;
+import school.faang.user_service.event_drive.app_event.publisher.UserDeactivationEvent;
 import school.faang.user_service.service.event.EventService;
 import school.faang.user_service.service.goal.GoalService;
 import school.faang.user_service.service.mentorship.MentorshipService;

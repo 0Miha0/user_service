@@ -17,7 +17,7 @@ import school.faang.user_service.exception.customexception.CSVFileException;
 import school.faang.user_service.filter.user.UserFilter;
 import school.faang.user_service.mapper.user.UserMapper;
 import school.faang.user_service.pojo.Person;
-import school.faang.user_service.publisher.UserDeactivationEvent;
+import school.faang.user_service.event_drive.app_event.publisher.UserDeactivationEvent;
 import school.faang.user_service.repository.UserRepository;
 import school.faang.user_service.repository.premium.PremiumRepository;
 import school.faang.user_service.service.country.CountryService;
