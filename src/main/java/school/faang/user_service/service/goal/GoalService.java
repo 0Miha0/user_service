@@ -10,10 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import school.faang.user_service.dto.goal.GoalDto;
 import school.faang.user_service.dto.goal.GoalFilterDto;
 import school.faang.user_service.entity.goal.Goal;
+import school.faang.user_service.entity.goal.GoalStatus;
+import school.faang.user_service.event_drive.redis.event.CompletedTaskEvent;
+import school.faang.user_service.event_drive.redis.publisher.CompletedTaskEventPublisher;
 import school.faang.user_service.exception.customexception.DataValidationException;
 import school.faang.user_service.filter.goal.GoalFilter;
 import school.faang.user_service.mapper.goal.GoalMapper;
-import school.faang.user_service.publisher.UserDeactivationEvent;
+import school.faang.user_service.event_drive.app_event.publisher.UserDeactivationEvent;
 import school.faang.user_service.repository.goal.GoalRepository;
 import school.faang.user_service.service.skill.SkillService;
 import school.faang.user_service.service.user.UserService;
@@ -34,6 +37,7 @@ public class GoalService {
     private final SkillService skillService;
     private final UserService userService;
     private final List<GoalFilter> goalFilters;
+    private final CompletedTaskEventPublisher completedTaskEventPublisher;
 
     @Value("${app.user-service.goal-service.max-goals-amount}")
     private int maxGoalsAmount;
@@ -58,13 +62,23 @@ public class GoalService {
     public void updateGoal(Long goalId, GoalDto goalDto) {
         log.info("The beginning update goal with id: {}", goalId);
         Goal foundGoal = findById(goalId);
+        goalMapper.updateEntityFromDto(goalDto, foundGoal);
         goalValidator.validateGoalStatus(goalDto.getStatus());
         validateSkillsExistence(goalDto.getSkillIds());
-
         foundGoal.setParent(findById(goalDto.getParentId()));
         foundGoal.setSkillsToAchieve(skillService.findAllById(goalDto.getSkillIds()));
         foundGoal.setUpdatedAt(LocalDateTime.now());
         save(foundGoal);
+
+        if (foundGoal.getStatus() == GoalStatus.COMPLETED){
+            completedTaskEventPublisher.publish(
+                    CompletedTaskEvent.builder()
+                            .goalId(foundGoal.getId())
+                            .actorId(foundGoal.getMentor().getId())
+                            .receivedAt(LocalDateTime.now())
+                            .build()
+            );
+        }
         log.info("Goal wit id: {} successfully updated", goalId);
     }
 

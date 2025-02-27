@@ -1,4 +1,4 @@
-package school.faang.user_service.publisher;
+package school.faang.user_service.event_drive.app_event.publisher;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;

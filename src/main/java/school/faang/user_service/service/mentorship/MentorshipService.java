@@ -2,12 +2,9 @@ package school.faang.user_service.service.mentorship;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import school.faang.user_service.dto.mentorship.MentorshipUserDto;
 import school.faang.user_service.entity.User;
-import school.faang.user_service.publisher.UserDeactivationEvent;
 import school.faang.user_service.service.user.UserService;
 
 import java.util.List;
