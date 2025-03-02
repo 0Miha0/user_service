@@ -36,6 +36,7 @@ spring:
         profile-view: profile_view_channel
         mentorship-requested: mentorship_requested_channel
         completed-task: completed_task_channel
+        follower: follower_channel
 
 listeners:
   userDeactivation: true
