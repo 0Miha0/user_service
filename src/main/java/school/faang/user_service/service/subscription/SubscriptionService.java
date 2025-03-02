@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import school.faang.user_service.dto.user.UserFilterDto;
 import school.faang.user_service.dto.user.user_subscription.UserSubscriptionDto;
 import school.faang.user_service.entity.User;
+import school.faang.user_service.event_drive.redis.event.FollowerEvent;
+import school.faang.user_service.event_drive.redis.publisher.FollowerEventPublisher;
 import school.faang.user_service.filter.user.UserFilter;
 import school.faang.user_service.mapper.user.UserSubscriptionMapper;
 import school.faang.user_service.repository.SubscriptionRepository;
@@ -25,6 +27,7 @@ public class SubscriptionService {
     private final List<UserFilter> userFilters;
     private final SubscriptionValidator subscriptionValidator;
     private final UserValidator userValidator;
+    private final FollowerEventPublisher followerEventPublisher;
 
     public void followUser(long followerId, long followeeId) {
         userValidator.areUsersExist(followerId, followeeId);
@@ -32,6 +35,12 @@ public class SubscriptionService {
 
         subscriptionRepository.followUser(followerId, followeeId);
         log.info("User with id: {} follow user with id: {}", followerId, followeeId);
+
+        followerEventPublisher.publish(
+                FollowerEvent.builder()
+                        .id(followeeId)
+                        .build()
+        );
     }
 
     public void unfollowUser(Long followerId, Long followeeId) {
