@@ -1,0 +1,22 @@
+INSERT INTO users (username, email, phone, password, active, about_me, country_id, city, experience, created_at, updated_at)
+VALUES
+    ('DanielMoore', 'danielmoore@example.com', '1231231234', 'password10', true, 'About Daniel Moore', 2, 'Los Angeles', 20, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('EmmaWhite', 'emmawhite@example.com', '9876543210', 'password11', true, 'About Emma White', 3, 'Madrid', 22, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('MatthewHall', 'matthewhall@example.com', '5647382910', 'password12', true, 'About Matthew Hall', 1, 'Amsterdam', 24, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('IsabellaYoung', 'isabellayoung@example.com', '1029384756', 'password13', true, 'About Isabella Young', 4, 'Lisbon', 26, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('EthanScott', 'ethanscott@example.com', '8374651920', 'password14', true, 'About Ethan Scott', 2, 'Seoul', 28, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('MiaAllen', 'miaallen@example.com', '5647382911', 'password15', true, 'About Mia Allen', 3, 'Hong Kong', 30, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('AlexanderKing', 'alexanderking@example.com', '9873216540', 'password16', true, 'About Alexander King', 1, 'Vienna', 32, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('CharlotteWright', 'charlottewright@example.com', '1209384756', 'password17', true, 'About Charlotte Wright', 4, 'Stockholm', 34, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('HenryLopez', 'henrylopez@example.com', '9283746510', 'password18', true, 'About Henry Lopez', 2, 'Copenhagen', 36, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('AmeliaGreen', 'ameliagreen@example.com', '8372914650', 'password19', true, 'About Amelia Green', 3, 'Oslo', 38, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('LucasAdams', 'lucasadams@example.com', '5647382912', 'password20', true, 'About Lucas Adams', 1, 'Helsinki', 40, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('HarperNelson', 'harpernelson@example.com', '8374651921', 'password21', true, 'About Harper Nelson', 4, 'Brussels', 42, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('JackCarter', 'jackcarter@example.com', '9876541230', 'password22', true, 'About Jack Carter', 2, 'Dublin', 44, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('EvelynMitchell', 'evelynmitchell@example.com', '1209384757', 'password23', true, 'About Evelyn Mitchell', 3, 'Athens', 46, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('MichaelRodriguez', 'michaelrodriguez@example.com', '9283746520', 'password24', true, 'About Michael Rodriguez', 1, 'Warsaw', 48, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('GracePerez', 'graceperez@example.com', '8372914651', 'password25', true, 'About Grace Perez', 4, 'Prague', 50, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('SamuelGarcia', 'samuelgarcia@example.com', '5647382913', 'password26', true, 'About Samuel Garcia', 2, 'Budapest', 52, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('ScarlettMartinez', 'scarlettmartinez@example.com', '8374651922', 'password27', true, 'About Scarlett Martinez', 3, 'Bratislava', 54, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('DavidLee', 'davidlee@example.com', '9873216541', 'password28', true, 'About David Lee', 1, 'Sofia', 56, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('LilyHernandez', 'lilyhernandez@example.com', '1209384758', 'password29', true, 'About Lily Hernandez', 4, 'Bucharest', 58, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
