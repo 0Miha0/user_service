@@ -1,5 +1,6 @@
 package school.faang.user_service.service.subscription;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class SubscriptionService {
     private final UserValidator userValidator;
     private final FollowerEventPublisher followerEventPublisher;
 
+    @Transactional
     public void followUser(long followerId, long followeeId) {
         userValidator.areUsersExist(followerId, followeeId);
         subscriptionValidator.isFollowingExistsValidate(followerId, followeeId);
@@ -43,6 +45,7 @@ public class SubscriptionService {
         );
     }
 
+    @Transactional
     public void unfollowUser(Long followerId, Long followeeId) {
         userValidator.areUsersExist(followerId, followeeId);
         subscriptionValidator.isFollowingNotExistsValidate(followerId, followeeId);
